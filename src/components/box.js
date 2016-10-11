@@ -32,8 +32,13 @@ const Box = (props) => {
 			styles[prop] = props[prop]
 	})
 
+	const handleClick = (e) => {
+		console.log('box handleClick')
+		e.stopPropagation()
+	}
+
 	return props.connectDragSource(
-		<div style={ {...styles} } className="react-layout-components--box">
+		<div style={ {...styles} } className="react-layout-components--box" onClick={ handleClick }>
 			{props.children}
 		</div>
 	)

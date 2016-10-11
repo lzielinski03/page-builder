@@ -10,7 +10,7 @@ import Title from './../components/title'
 import Subtitle from './../components/subtitle'
 
 import Layer from './../containers/layer/layer'
-import LayerProperties from './../containers/layer-properties/layer-properties'
+import LayerProperties from './../containers/layer/layer-properties'
 
 const Page = () => {
 	return (
@@ -25,7 +25,6 @@ const Page = () => {
 				<Box column flex="1 1 auto" >
 					<Layer/>
 				</Box>
-				
 
 				<Box column flex="0 0 20%" backgroundColor="#1D1F21">
 					<LayerProperties />

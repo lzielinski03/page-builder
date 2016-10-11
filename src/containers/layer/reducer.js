@@ -5,22 +5,27 @@ const initialState = {
 		{ name: 'box alpha'},
 		{ name: 'box beta'}
 	],
-	selected: false
+	selected: false,
+	selected2: {
+		id: null,
+		type: null,
+	},
+	direction: 'row'
 }
 
 const layer = (state = initialState, action) => {
 	switch (action.type) {
 		case types.SELECT_LAYER:
-			return {
-				childs: Object.assign([], [...state.childs]),
-				selected: action.selected
-			}
+			return Object.assign({}, state, { selected: action.selected })
 
 		case types.ADD_CHILD:
-			return {
-				childs: Object.assign([], [...state.childs, action.child]),
-				selected: state.selected
-			}
+			return Object.assign({}, state, { childs: [...state.childs, action.child] })
+
+		case types.TOGGLE_DIRECTION:
+			return Object.assign({}, state, { direction: action.direction })
+
+		case types.SELECT_ELEMENT:
+			return Object.assign({}, state, { selected2: action.element })
 
 		default:
 			return state

@@ -19,8 +19,10 @@ const collect = (connect, monitor) => {
 	}
 }
 
-const Layer = ({ childs, selected, layer, connectDropTarget }) => {
+const Layer = ({ childs, selected, layer, connectDropTarget, direction }) => {
 	let classList = []
+	let styles = {}
+	styles.flexDirection = direction
 	if (selected)
 		classList.push('selected')
 
@@ -29,7 +31,7 @@ const Layer = ({ childs, selected, layer, connectDropTarget }) => {
 	} 
 
 	return connectDropTarget(
-		<div className={ 'layer ' + [...classList] } onClick={ handleClick }>
+		<div className={ 'layer ' + [...classList] } onClick={ handleClick } style={{...styles}}>
 			{ childs.map( (item, i) => {
 				return <Box key={i} default />
 			}) }
@@ -38,7 +40,7 @@ const Layer = ({ childs, selected, layer, connectDropTarget }) => {
 }
 
 const mapStateToProps = ({layerReducer}) => {
-	return { childs: layerReducer.childs, selected: layerReducer.selected }
+	return { childs: layerReducer.childs, selected: layerReducer.selected, direction: layerReducer.direction }
 }
 
 const mapDispatchToProps = dispatch => {

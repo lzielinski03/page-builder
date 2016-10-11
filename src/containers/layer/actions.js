@@ -7,3 +7,11 @@ export const add = child => {
 export const select = selected => {
 	return { type: types.SELECT_LAYER, selected }
 }
+
+export const toggleDirection = direction => {
+	return { type: types.TOGGLE_DIRECTION, direction }
+}
+
+export const selectElement = element => {
+	return { type: types.SELECT_ELEMENT, element }
+}
