@@ -5,11 +5,8 @@ const initialState = {
 		{ name: 'box alpha'},
 		{ name: 'box beta'}
 	],
-	selected: false,
-	selected2: {
-		id: null,
-		type: null,
-	},
+	selected: true,
+	selected2: null,
 	direction: 'row'
 }
 

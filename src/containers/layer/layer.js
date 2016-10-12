@@ -19,28 +19,37 @@ const collect = (connect, monitor) => {
 	}
 }
 
-const Layer = ({ childs, selected, layer, connectDropTarget, direction }) => {
+const Layer = ({ childs, selected2, layer, connectDropTarget, direction }) => {
 	let classList = []
 	let styles = {}
 	styles.flexDirection = direction
-	if (selected)
+
+	if (selected2 && selected2.type === 'layer')
 		classList.push('selected')
 
-	const handleClick = () => {
-		layer.select(!selected)
+
+	const handleClick = (e) => {
+		select(9999, 'layer')
+		e.stopPropagation()
 	} 
 
+	const select = (id, type) => {
+		layer.selectElement({id, 'type': type})
+	}
 	return connectDropTarget(
 		<div className={ 'layer ' + [...classList] } onClick={ handleClick } style={{...styles}}>
 			{ childs.map( (item, i) => {
-				return <Box key={i} default />
+				let isSelected = false
+				if (selected2 && selected2.type === 'box' && selected2.id == i)
+					isSelected = true
+				return <Box key={i} id={i} selected={ isSelected } default handleClick={ select }/>
 			}) }
 		</div>
 	)
 }
 
 const mapStateToProps = ({layerReducer}) => {
-	return { childs: layerReducer.childs, selected: layerReducer.selected, direction: layerReducer.direction }
+	return { childs: layerReducer.childs, selected2: layerReducer.selected2, direction: layerReducer.direction }
 }
 
 const mapDispatchToProps = dispatch => {

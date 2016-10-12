@@ -5,6 +5,7 @@ import { DragSource } from 'react-dnd'
 const Box = (props) => {
 	const flexProps = ['flex', 'flexGrow', 'flexShrink', 'flexBasis']
 	const styleProps = ['backgroundColor', 'color', 'width', 'height']
+	let classList = []
 	const styles = {}
 
 	if (props.column)
@@ -18,9 +19,13 @@ const Box = (props) => {
 	if (props.default) {
 		styles.height = '100px'
 		styles.width = '100px'
-		styles.backgroundColor = '#252620'
+		if (!props.selected)
+			styles.backgroundColor = '#252620'
 		styles.margin = '10px'
 	}
+
+	if (props.selected)
+		classList.push('selected')
 
 	flexProps.forEach( prop => {
 		if (props.hasOwnProperty(prop))
@@ -33,12 +38,12 @@ const Box = (props) => {
 	})
 
 	const handleClick = (e) => {
-		console.log('box handleClick')
+		props.handleClick(props.id, 'box')
 		e.stopPropagation()
 	}
 
 	return props.connectDragSource(
-		<div style={ {...styles} } className="react-layout-components--box" onClick={ handleClick }>
+		<div style={ {...styles} } className={ "react-layout-components--box " + [...classList] } onClick={ handleClick }>
 			{props.children}
 		</div>
 	)
