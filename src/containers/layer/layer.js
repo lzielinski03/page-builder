@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { DropTarget } from 'react-dnd'
 import * as Actions from './actions'
-import Box from './../../components/box'
+import BoxLayer from './../box-layer/box-layer'
 
 const boxTarget = {
 	drop(props, monitor) {
@@ -42,7 +42,7 @@ const Layer = ({ childs, selected2, layer, connectDropTarget, direction }) => {
 				let isSelected = false
 				if (selected2 && selected2.type === 'box' && selected2.id == i)
 					isSelected = true
-				return <Box key={i} id={i} selected={ isSelected } default handleClick={ select }/>
+				return <BoxLayer key={i} id={i} selected={ isSelected } default handleClick={ select }/>
 			}) }
 		</div>
 	)

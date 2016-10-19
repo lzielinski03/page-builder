@@ -1,7 +1,8 @@
 import React from 'react'
+import { DragSource } from 'react-dnd'
 
-//const Box = ({ name, connectDragSource, fit = false, children, column = false }) => {
-const Box = (props) => {
+//const BoxLayer = ({ name, connectDragSource, fit = false, children, column = false }) => {
+const BoxLayer = (props) => {
 	const flexProps = ['flex', 'flexGrow', 'flexShrink', 'flexBasis']
 	const styleProps = ['backgroundColor', 'color', 'width', 'height']
 	let classList = []
@@ -41,12 +42,25 @@ const Box = (props) => {
 		e.stopPropagation()
 	}
 
-	return(
+	return props.connectDragSource(
 		<div style={ {...styles} } className={ "react-layout-components--box " + [...classList] } onClick={ handleClick }>
 			{props.children}
 		</div>
 	)
 }
 
+const boxSource = {
+	beginDrag(props) {
+		return { name: props.name}
+	}
+}
 
-export default Box
+const collect = (connect, monitor) => {
+	return {
+		connectDragSource: connect.dragSource(),
+		isDragging: monitor.isDragging()
+	}
+}
+
+
+export default DragSource('box', boxSource, collect)(BoxLayer)
