@@ -1,10 +1,29 @@
 import * as types from './constants'
 
 const initialState = {
+	props: {
+		classNames: [],
+		elementStyles: [{'fit': true}]
+	},
 	childs: [
-		{ name: 'box alpha'},
-		{ name: 'box beta'}
+		{
+			type: 'Box',
+			props: {
+				classNames: ['default'],
+				elementStyles: []
+			},
+			childs: []
+		},
+		{
+			type: 'Subtitle',
+			props: {
+				classNames: [],
+				elementStyles: []
+			},
+			childs: 'Title'
+		}
 	],
+
 	selected: true,
 	selected2: null,
 	direction: 'row'
