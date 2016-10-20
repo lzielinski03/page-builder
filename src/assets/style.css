@@ -38,3 +38,8 @@ html, body {
 	display: -webkit-flex;
 	display: flex;
 }
+
+.default {
+	width: 100px;
+height: 100px;
+}

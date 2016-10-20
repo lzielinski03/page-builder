@@ -12,6 +12,8 @@ import Subtitle from './../components/subtitle'
 import Layer from './../containers/layer/layer'
 import LayerProperties from './../containers/layer/layer-properties'
 
+import Box from './../components/box'
+
 const Page = () => {
 	return (
 		<div className="root">
@@ -20,6 +22,14 @@ const Page = () => {
 					<Title value="Drag & Drop" color="white" backgroundColor="#373B41" textAlign="center"/>
 					<Subtitle value="Layout" color="white"/>
 					<BoxLayer backgroundColor="#9BD0E1" width="100px" height="100px"/>
+					
+					<Box className="default,qwe" style={{color: "red",backgroundColor: "black",border: "1px solid pink"}}>
+						<Subtitle className="" style={{}} value="Hola!"/>
+						<Box className="default" style={{backgroundColor: "red"}}>
+							<Box className="default" style={{backgroundColor: "blue"}}/>
+						</Box>
+					</Box>
+
 				</BoxLayer>
 				
 				<BoxLayer column flex="1 1 auto" >

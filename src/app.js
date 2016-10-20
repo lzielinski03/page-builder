@@ -89,14 +89,14 @@ function buildTree(data) {
 }
 
 //const Root = components['root']
-const Root = buildTree(data)
+//const Root = buildTree(data)
 
 const App = () => (
 		<Provider store={store}>
 			<div className="root">
 				
 				<Home/>
-				{Root}
+				
 				<DevTools />
 			</div>
 		</Provider>

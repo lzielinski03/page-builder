@@ -2,10 +2,12 @@ import React from 'react'
 
 //const Box = ({ name, connectDragSource, fit = false, children, column = false }) => {
 const Box = (props) => {
+	console.log(props)
 	const flexProps = ['flex', 'flexGrow', 'flexShrink', 'flexBasis']
 	const styleProps = ['backgroundColor', 'color', 'width', 'height']
-	let classList = []
-	const styles = {}
+	let classList = props.className.split(',')
+	console.log(Array.isArray(classList))
+	const styles = props.style
 
 	if (props.column)
 		styles.flexDirection = 'column'
@@ -40,9 +42,10 @@ const Box = (props) => {
 		props.handleClick(props.id, 'box')
 		e.stopPropagation()
 	}
-
+	const test = "react-layout-components--box " + classList.join(',')
+console.log(classList.join(' '))
 	return(
-		<div style={ {...styles} } className={ "react-layout-components--box " + [...classList] } onClick={ handleClick }>
+		<div style={ {...styles} } className={ "react-layout-components--box " + classList.join(' ') } onClick={ handleClick }>
 			{props.children}
 		</div>
 	)
