@@ -38,7 +38,7 @@ const BoxLayer = (props) => {
 	})
 
 	const handleClick = (e) => {
-		props.handleClick(props.id, 'box')
+		//props.handleClick(props.id, 'box')
 		e.stopPropagation()
 	}
 

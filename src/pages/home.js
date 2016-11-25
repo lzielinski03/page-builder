@@ -8,7 +8,8 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import BoxLayer from './../containers/box-layer/box-layer'
 import Title from './../components/title'
 import Subtitle from './../components/subtitle'
-
+import Button from './../components/button'
+import FileDownload from './../containers/download-widget/file-download'
 import Layer from './../containers/layer/layer'
 import LayerProperties from './../containers/layer/layer-properties'
 
@@ -23,12 +24,12 @@ const Page = () => {
 					<Subtitle value="Layout" color="white"/>
 					<BoxLayer backgroundColor="#9BD0E1" width="100px" height="100px"/>
 					
-					<Box className="default,qwe" style={{color: "red",backgroundColor: "black",border: "1px solid pink"}}>
-						<Subtitle className="" style={{}} value="Hola!"/>
-						<Box className="default" style={{backgroundColor: "red"}}>
-							<Box className="default" style={{backgroundColor: "blue"}}/>
-						</Box>
-					</Box>
+
+					<FileDownload
+						label="Download proyect"
+						url='http://localhost:3000/compile'
+						method='POST'
+						/>
 
 				</BoxLayer>
 				

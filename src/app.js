@@ -1,8 +1,9 @@
 import 'babel-polyfill'
 import './assets/style.css'
-import { createStore, compose } from 'redux'
+import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
+import thunk from 'redux-thunk'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -15,6 +16,7 @@ import Home from './pages/home'
 
 
 const finalCreateStore = compose(
+	applyMiddleware(thunk),
 	DevTools.instrument(),
 	persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
 )(createStore)
@@ -22,10 +24,8 @@ const finalCreateStore = compose(
 let store = finalCreateStore(reducer)
 
 /*************************************/
-import Box from './components/box'
-import Subtitle from './components/subtitle'
-import createFragment from 'react-addons-create-fragment'
 
+/*
 const childs = createFragment({
 	'box': React.createElement(Box, {'default': true}),
 	'subtitle': React.createElement(Subtitle, {'value': 'hola'})
@@ -86,7 +86,7 @@ function buildTree(data) {
 		console.log('element ', data.type)
 		return React.createElement(elements[data.type], {'value': 'hola'})
 	}
-}
+}*/
 
 //const Root = components['root']
 //const Root = buildTree(data)
