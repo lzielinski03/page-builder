@@ -18,11 +18,11 @@ import Box from './../components/box'
 const Page = () => {
 	return (
 		<div className="root">
-			<BoxLayer fit>
+			<BoxLayer fit className="react-layout-components--box">
 				<BoxLayer column flex="0 0 20%" backgroundColor="#1D1F21">
 					<Title value="Drag & Drop" color="white" backgroundColor="#373B41" textAlign="center"/>
 					<Subtitle value="Layout" color="white"/>
-					<BoxLayer backgroundColor="#9BD0E1" width="100px" height="100px"/>
+					<BoxLayer backgroundColor="#9BD0E1" width="100px" height="100px" dragType="BoxLayer"/>
 					
 
 					<FileDownload
@@ -35,6 +35,7 @@ const Page = () => {
 				
 				<BoxLayer column flex="1 1 auto" >
 					<Layer/>
+
 				</BoxLayer>
 
 				<BoxLayer column flex="0 0 20%" backgroundColor="#1D1F21">

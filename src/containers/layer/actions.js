@@ -1,7 +1,7 @@
 import * as types from './constants'
 
-export const add = child => {
-	return { type: types.ADD_CHILD, child }
+export const add = (id, child) => {
+	return { type: types.ADD_CHILD, id: id, child: child }
 }
 
 export const select = selected => {

@@ -1,4 +1,4 @@
-import 'babel-polyfill'
+//import 'babel-polyfill'
 import './assets/style.css'
 import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'

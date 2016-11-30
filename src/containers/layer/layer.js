@@ -1,13 +1,33 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { DropTarget } from 'react-dnd'
 import * as Actions from './actions'
-import BoxLayer from './../box-layer/box-layer'
+import createFragment from 'react-addons-create-fragment'
 
+import BoxLayer from './../box-layer/box-layer'
+import Title from './../../components/title'
+
+// Connect redux
+const mapStateToProps = ({layerReducer}) => {
+	return { id: layerReducer.id, childs: layerReducer.childs, selected2: layerReducer.selected2, direction: layerReducer.direction }
+}
+
+const mapDispatchToProps = dispatch => {
+	return { layer: bindActionCreators(Actions, dispatch) }
+}
+
+// Drop target
 const boxTarget = {
 	drop(props, monitor) {
-		props.layer.add(monitor.getItem())
+		if (!monitor.isOver()){
+			return;
+		}
+		//console.log(props.id)
+		//console.log(props.id, monitor.getItem())
+
+		props.layer.add(props.id, monitor.getItem())
+		return monitor.getItem()
 	}
 }
 
@@ -19,44 +39,65 @@ const collect = (connect, monitor) => {
 	}
 }
 
-const Layer = ({ childs, selected2, layer, connectDropTarget, direction }) => {
-	let classList = []
-	let styles = {}
-	styles.flexDirection = direction
-
-	if (selected2 && selected2.type === 'layer')
-		classList.push('selected')
+const elements = {
+	"BoxLayer": BoxLayer,
+	"Title": Title
+}
 
 
-	const handleClick = (e) => {
-		select(9999, 'layer')
-		e.stopPropagation()
-	} 
-
-	const select = (id, type) => {
-		layer.selectElement({id, 'type': type})
+@connect(mapStateToProps, mapDispatchToProps)
+@DropTarget('BoxLayer', boxTarget, collect)
+export default class Layer extends Component {
+	constructor(props) {
+		super(props)
 	}
-	return connectDropTarget(
-		<div className={ 'layer ' + [...classList] } onClick={ handleClick } style={{...styles}}>
-			{ childs.map( (item, i) => {
-				let isSelected = false
-				if (selected2 && selected2.type === 'box' && selected2.id == i)
-					isSelected = true
-				return <BoxLayer key={i} id={i} selected={ isSelected } default handleClick={ select }/>
-			}) }
-		</div>
-	)
-}
 
-const mapStateToProps = ({layerReducer}) => {
-	return { childs: layerReducer.childs, selected2: layerReducer.selected2, direction: layerReducer.direction }
-}
+	render() {
+		let { childs, selected2, layer, connectDropTarget, direction } = this.props
+		
+		let f = childs.reduce( (init, child, i) => {
+			if (child === undefined) return init
+			
+			if (child.childs.length === 0){
+				init[child.type + i] = React.createElement(elements[child.type], {'default': true, id: child.id, magic: true})
+				return init
+			}
 
-const mapDispatchToProps = dispatch => {
-	return { layer: bindActionCreators(Actions, dispatch) }
-}
+			let x = child.childs.reduce( (result, innerChild, i) => {
+				result[innerChild.type + i] = React.createElement(elements[innerChild.type], { magic: true, 'backgroundColor': "#999", "width" : "50px", "height": "50px"})
+				return result
+			}, {})
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(DropTarget('box', boxTarget, collect)(Layer))
+			let children = createFragment(x)
+			init[child.type + i] = React.createElement(elements[child.type], {'default': true, id: child.id, magic: true, children: children})
+
+			return init
+		}, {})
+
+
+		childs = createFragment(f)
+		let classList = []
+		let styles = {}
+		styles.flexDirection = direction
+
+		if (selected2 && selected2.type === 'layer')
+			classList.push('selected')
+
+
+		const handleClick = (e) => {
+			select(9999, 'layer')
+			e.stopPropagation()
+		} 
+
+		const select = (id, type) => {
+			layer.selectElement({id, 'type': type})
+		}
+		return connectDropTarget(
+			<div className={ 'layer ' + [...classList] } onClick={ handleClick } style={{...styles}}>
+				{ 
+					childs
+				}
+			</div>
+		)
+	}
+}

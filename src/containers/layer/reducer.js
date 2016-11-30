@@ -1,29 +1,38 @@
 import * as types from './constants'
+import { fromJS } from 'immutable'
+
+let id = 1;
 
 const initialState = {
+	id: 0,
 	props: {
-		classNames: [],
+		classNames: ['react-layout-components--box'],
 		elementStyles: [{'fit': true}]
 	},
-	childs: [
+	childs: [/*
 		{
-			type: 'Box',
+			id: 1,
+			type: 'BoxLayer',
 			props: {
 				classNames: ['default'],
-				elementStyles: []
+				elementStyles: [],
+				childs: []
 			},
-			childs: []
-		},
-		{
+			childs: [],
+			dashboard: { selected: true }
+		}
+		,{
+			id: 2,
 			type: 'Subtitle',
 			props: {
 				classNames: [],
 				elementStyles: []
 			},
-			childs: 'Title'
-		}
+			childs: 'Title',
+			dashboard: { selected: true }
+		}*/
 	],
-
+	dashboard:{ selected: [{id: 1}] },
 	selected: true,
 	selected2: null,
 	direction: 'row'
@@ -35,7 +44,27 @@ const layer = (state = initialState, action) => {
 			return Object.assign({}, state, { selected: action.selected })
 
 		case types.ADD_CHILD:
-			return Object.assign({}, state, { childs: [...state.childs, action.child] })
+
+			if (state.id === action.id) {
+				//console.log(action)
+				return Object.assign({}, state, { childs: [...state.childs, {
+					id: id++, type: action.child.type, childs: [], props: {
+						classNames: ['react-layout-components--box'],
+						elementStyles: [{'fit': true}]
+					}
+				}]})
+			}
+
+			return Object.assign({}, state, { childs: state.childs.map( item => {
+				if (item.id === action.id) 
+					item.childs.push({id: id++, type: action.child.type, childs: [], props: {
+						classNames: ['react-layout-components--box'],
+						elementStyles: [{'fit': true}]
+					}})
+				
+				return item
+			})})
+
 
 		case types.TOGGLE_DIRECTION:
 			return Object.assign({}, state, { direction: action.direction })

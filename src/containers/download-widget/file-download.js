@@ -4,7 +4,27 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from './actions'
 
-class FileDownload extends Component {
+const mapStateToProps = ({widgetDownlaodReducer, layerReducer}) => {
+	return { 
+		isFetching: widgetDownlaodReducer.isFetching,
+		didInvalidate: widgetDownlaodReducer.didInvalidate,
+		message: widgetDownlaodReducer.message,
+		blobUrl: widgetDownlaodReducer.blobUrl,
+		dataTree: {
+			type: 'box',
+			childs: layerReducer.childs,
+			props: layerReducer.props
+		}
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return { download: bindActionCreators(Actions, dispatch)}
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class FileDownload extends Component {
+//class FileDownload extends Component {
 
 	constructor(props) {
 		super(props)
@@ -22,6 +42,7 @@ class FileDownload extends Component {
 	};
 
 	download() {
+		console.log(this.props)
 		let { url, dataTree, method, download } = this.props
 
 		download.file( url, dataTree, method )
@@ -52,22 +73,7 @@ class FileDownload extends Component {
 	}
 }
 
-const mapStateToProps = ({widgetDownlaodReducer, layerReducer}) => {
-	return { 
-		isFetching: widgetDownlaodReducer.isFetching,
-		didInvalidate: widgetDownlaodReducer.didInvalidate,
-		message: widgetDownlaodReducer.message,
-		blobUrl: widgetDownlaodReducer.blobUrl,
-		dataTree: {
-			type: 'box',
-			childs: layerReducer.childs,
-			props: layerReducer.props
-		}
-	}
-}
 
-const mapDispatchToProps = dispatch => {
-	return { download: bindActionCreators(Actions, dispatch)}
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(FileDownload)
+//export default connect(mapStateToProps, mapDispatchToProps)(FileDownload)
+
