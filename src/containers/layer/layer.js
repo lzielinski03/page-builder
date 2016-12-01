@@ -20,11 +20,7 @@ const mapDispatchToProps = dispatch => {
 // Drop target
 const boxTarget = {
 	drop(props, monitor) {
-		if (!monitor.isOver()){
-			return;
-		}
-		//console.log(props.id)
-		//console.log(props.id, monitor.getItem())
+		if (!monitor.isOver()) return;
 
 		props.layer.add(props.id, monitor.getItem())
 		return monitor.getItem()
@@ -48,8 +44,16 @@ const elements = {
 @connect(mapStateToProps, mapDispatchToProps)
 @DropTarget('BoxLayer', boxTarget, collect)
 export default class Layer extends Component {
+
 	constructor(props) {
 		super(props)
+		this.handleClick = this.handleClick.bind(this)
+	}
+
+	handleClick(e) {
+		console.log('handleClick')
+		this.props.layer.toggleSelect(this.props.id)
+		e.stopPropagation()
 	}
 
 	render() {
@@ -59,7 +63,10 @@ export default class Layer extends Component {
 			if (child === undefined) return init
 			
 			if (child.childs.length === 0){
-				init[child.type + i] = React.createElement(elements[child.type], {'default': true, id: child.id, magic: true})
+				console.log(...child.props.elementStyles)
+				init[child.type + i] = React.createElement(elements[child.type], {
+					'default': true, id: child.id, magic: true, elementStyles: [...child.props.elementStyles]
+				})
 				return init
 			}
 
@@ -84,16 +91,13 @@ export default class Layer extends Component {
 			classList.push('selected')
 
 
-		const handleClick = (e) => {
-			select(9999, 'layer')
-			e.stopPropagation()
-		} 
+		 
 
 		const select = (id, type) => {
 			layer.selectElement({id, 'type': type})
 		}
 		return connectDropTarget(
-			<div className={ 'layer ' + [...classList] } onClick={ handleClick } style={{...styles}}>
+			<div className={ 'layer ' + [...classList] } onClick={ this.handleClick } style={{...styles}}>
 				{ 
 					childs
 				}

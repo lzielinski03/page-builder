@@ -15,3 +15,7 @@ export const toggleDirection = direction => {
 export const selectElement = element => {
 	return { type: types.SELECT_ELEMENT, element }
 }
+
+export const toggleSelect = id => {
+	return { type: types.TOGGLE_SELECT, id }
+}

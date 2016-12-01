@@ -70,7 +70,7 @@ export default class BoxLayer extends Component {
 	}
 
 	handleClick(e) {
-		this.props.handleClick(this.props.id, 'box')
+		//this.props.handleClick(this.props.id, 'box')
 		e.stopPropagation()
 	}
 
@@ -86,9 +86,7 @@ export default class BoxLayer extends Component {
 
 
 		//console.log((this.props.children === undefined && this.props.magic === true))
-		if (this.props.children === undefined && this.props.magic === true){
-			//console.log(this.props.childs)
-		}
+		
 
 		if (typeof this.props.className === 'string')
 			classList.push(this.props.className)
@@ -118,9 +116,21 @@ export default class BoxLayer extends Component {
 		})
 
 		styleProps.forEach( prop => {
-			if (props.hasOwnProperty(prop))
+			if (props.hasOwnProperty(prop)){
 				styles[prop] = props[prop]
+			}
 		})
+/*
+		if (this.props.magic === true){
+			console.log(this.props.elementStyles)
+			props.elementStyles.forEach( prop => {
+				console.log(prop)
+				if (props.hasOwnProperty(prop)){
+					styles[prop] = props[prop]
+				}
+			})
+		}*/
+		
 		//console.log(this.props.children)
 		return this.props.connectDragSource(this.props.connectDropTarget(
 			<div style={ {...styles} }

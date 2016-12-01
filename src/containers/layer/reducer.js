@@ -50,7 +50,7 @@ const layer = (state = initialState, action) => {
 				return Object.assign({}, state, { childs: [...state.childs, {
 					id: id++, type: action.child.type, childs: [], props: {
 						classNames: ['react-layout-components--box'],
-						elementStyles: [{'fit': true}]
+						elementStyles: [{'backgroundColor': 'red'}]
 					}
 				}]})
 			}
@@ -70,7 +70,13 @@ const layer = (state = initialState, action) => {
 			return Object.assign({}, state, { direction: action.direction })
 
 		case types.SELECT_ELEMENT:
+		console.log('select')
 			return Object.assign({}, state, { selected2: action.element })
+
+		case types.TOGGLE_SELECT:
+			console.log('toggleSelect')
+			return Object.assign({}, state, { dashboard: {selected: [...state.dashboard.selected, { id: action.id } ]}})
+
 
 		default:
 			return state
