@@ -34,7 +34,7 @@ const initialState = {
 			dashboard: { selected: true }
 		}*/
 	],
-	dashboard:{ selected: [{id: 1}] },
+	dashboard:{ selected: [] },
 	selected: true,
 	selected2: null,
 	direction: 'row'
@@ -78,6 +78,17 @@ const layer = (state = initialState, action) => {
 			let styles = Object.assign({}, state.props.elementStyles)
 			styles['backgroundColor'] = action.color
 			return Object.assign({}, state, { props: {elementStyles: { ...styles }}})
+
+		case types.TOGGLE_SELECT:
+			let selectedIds = Object.assign([], [...state.dashboard.selected])
+
+			if(selectedIds.includes(action.id)) {
+				let index = selectedIds.indexOf(action.id)
+				selectedIds.splice(index, 1)
+			}else{
+				selectedIds.push(action.id)
+			}
+			return Object.assign({}, state, { dashboard: {selected: [...selectedIds] }})
 
 		default:
 			return state

@@ -19,3 +19,7 @@ export const selectElement = element => {
 export const changeColor = color => {
 	return { type: types.CHANGE_COLOR, color }
 }
+
+export const toggleSelect = id => {
+	return { type: types.TOGGLE_SELECT, id }
+}
