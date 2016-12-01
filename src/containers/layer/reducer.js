@@ -7,7 +7,7 @@ const initialState = {
 	id: 0,
 	props: {
 		classNames: ['react-layout-components--box'],
-		elementStyles: [{'fit': true}]
+		elementStyles: {'fit': true}
 	},
 	childs: [/*
 		{
@@ -15,7 +15,9 @@ const initialState = {
 			type: 'BoxLayer',
 			props: {
 				classNames: ['default'],
-				elementStyles: [],
+				elementStyles: {
+					fit: true
+				},
 				childs: []
 			},
 			childs: [],
@@ -50,7 +52,7 @@ const layer = (state = initialState, action) => {
 				return Object.assign({}, state, { childs: [...state.childs, {
 					id: id++, type: action.child.type, childs: [], props: {
 						classNames: ['react-layout-components--box'],
-						elementStyles: [{'fit': true}]
+						elementStyles: {'fit': true}
 					}
 				}]})
 			}
@@ -59,7 +61,7 @@ const layer = (state = initialState, action) => {
 				if (item.id === action.id) 
 					item.childs.push({id: id++, type: action.child.type, childs: [], props: {
 						classNames: ['react-layout-components--box'],
-						elementStyles: [{'fit': true}]
+						elementStyles: {'fit': true}
 					}})
 				
 				return item
@@ -71,6 +73,11 @@ const layer = (state = initialState, action) => {
 
 		case types.SELECT_ELEMENT:
 			return Object.assign({}, state, { selected2: action.element })
+
+		case types.CHANGE_COLOR:
+			let styles = Object.assign({}, state.props.elementStyles)
+			styles['backgroundColor'] = action.color
+			return Object.assign({}, state, { props: {elementStyles: { ...styles }}})
 
 		default:
 			return state

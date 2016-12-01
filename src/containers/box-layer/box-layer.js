@@ -70,7 +70,7 @@ export default class BoxLayer extends Component {
 	}
 
 	handleClick(e) {
-		this.props.handleClick(this.props.id, 'box')
+		//this.props.handleClick(this.props.id, 'box')
 		e.stopPropagation()
 	}
 

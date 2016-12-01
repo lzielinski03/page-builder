@@ -15,3 +15,7 @@ export const toggleDirection = direction => {
 export const selectElement = element => {
 	return { type: types.SELECT_ELEMENT, element }
 }
+
+export const changeColor = color => {
+	return { type: types.CHANGE_COLOR, color }
+}
