@@ -10,7 +10,12 @@ import Title from './../../components/title'
 
 // Connect redux
 const mapStateToProps = ({layerReducer}) => {
-	return { id: layerReducer.id, childs: layerReducer.childs, selected2: layerReducer.selected2, direction: layerReducer.direction }
+	return { 
+		id: layerReducer.id,
+		childs: layerReducer.childs,
+		dashboard: layerReducer.dashboard,
+		direction: layerReducer.direction 
+	}
 }
 
 const mapDispatchToProps = dispatch => {
@@ -40,7 +45,6 @@ const elements = {
 	"Title": Title
 }
 
-
 @connect(mapStateToProps, mapDispatchToProps)
 @DropTarget('BoxLayer', boxTarget, collect)
 export default class Layer extends Component {
@@ -57,13 +61,26 @@ export default class Layer extends Component {
 	}
 
 	render() {
-		let { childs, selected2, layer, connectDropTarget, direction } = this.props
+		let { childs, layer, connectDropTarget, direction, dashboard, id } = this.props
+
+		const flexProps = ['flex', 'flexGrow', 'flexShrink', 'flexBasis']
+		const styleProps = ['backgroundColor', 'color', 'width', 'height']
+		let classList = []
+		const styles = {}
+
+		dashboard.selected.forEach(selectedId => {
+			if (selectedId === id){
+				classList.push('selected')
+				let index = styleProps.indexOf('backgroundColor')
+				styleProps.splice(index, 1)
+			}
+		})
+
 		
 		let f = childs.reduce( (init, child, i) => {
 			if (child === undefined) return init
 			
 			if (child.childs.length === 0){
-				console.log(...child.props.elementStyles)
 				init[child.type + i] = React.createElement(elements[child.type], {
 					'default': true, id: child.id, magic: true, elementStyles: [...child.props.elementStyles]
 				})
@@ -83,15 +100,7 @@ export default class Layer extends Component {
 
 
 		childs = createFragment(f)
-		let classList = []
-		let styles = {}
 		styles.flexDirection = direction
-
-		if (selected2 && selected2.type === 'layer')
-			classList.push('selected')
-
-
-		 
 
 		const select = (id, type) => {
 			layer.selectElement({id, 'type': type})

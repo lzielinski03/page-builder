@@ -9,7 +9,7 @@ const Subtitle = (props) => {
 			styles[prop] = props[prop]
 	})
 
-	return (<h2 style={{ ...styles }}>{ props.children }</h2>)
+	return (<h2 style={{ ...styles }}>{ props.value }</h2>)
 }
 
 export default Subtitle

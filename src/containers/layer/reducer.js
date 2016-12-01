@@ -7,7 +7,7 @@ const initialState = {
 	id: 0,
 	props: {
 		classNames: ['react-layout-components--box'],
-		elementStyles: [{'fit': true}]
+		elementStyles: {'fit': true}
 	},
 	childs: [/*
 		{
@@ -15,7 +15,9 @@ const initialState = {
 			type: 'BoxLayer',
 			props: {
 				classNames: ['default'],
-				elementStyles: [],
+				elementStyles: {
+					fit: true
+				},
 				childs: []
 			},
 			childs: [],
@@ -32,7 +34,7 @@ const initialState = {
 			dashboard: { selected: true }
 		}*/
 	],
-	dashboard:{ selected: [{id: 1}] },
+	dashboard:{ selected: [] },
 	selected: true,
 	selected2: null,
 	direction: 'row'
@@ -50,7 +52,7 @@ const layer = (state = initialState, action) => {
 				return Object.assign({}, state, { childs: [...state.childs, {
 					id: id++, type: action.child.type, childs: [], props: {
 						classNames: ['react-layout-components--box'],
-						elementStyles: [{'backgroundColor': 'red'}]
+						elementStyles: {'fit': true}
 					}
 				}]})
 			}
@@ -59,7 +61,7 @@ const layer = (state = initialState, action) => {
 				if (item.id === action.id) 
 					item.childs.push({id: id++, type: action.child.type, childs: [], props: {
 						classNames: ['react-layout-components--box'],
-						elementStyles: [{'fit': true}]
+						elementStyles: {'fit': true}
 					}})
 				
 				return item
@@ -70,13 +72,23 @@ const layer = (state = initialState, action) => {
 			return Object.assign({}, state, { direction: action.direction })
 
 		case types.SELECT_ELEMENT:
-		console.log('select')
 			return Object.assign({}, state, { selected2: action.element })
 
-		case types.TOGGLE_SELECT:
-			console.log('toggleSelect')
-			return Object.assign({}, state, { dashboard: {selected: [...state.dashboard.selected, { id: action.id } ]}})
+		case types.CHANGE_COLOR:
+			let styles = Object.assign({}, state.props.elementStyles)
+			styles['backgroundColor'] = action.color
+			return Object.assign({}, state, { props: {elementStyles: { ...styles }}})
 
+		case types.TOGGLE_SELECT:
+			let selectedIds = Object.assign([], [...state.dashboard.selected])
+
+			if(selectedIds.includes(action.id)) {
+				let index = selectedIds.indexOf(action.id)
+				selectedIds.splice(index, 1)
+			}else{
+				selectedIds.push(action.id)
+			}
+			return Object.assign({}, state, { dashboard: {selected: [...selectedIds] }})
 
 		default:
 			return state

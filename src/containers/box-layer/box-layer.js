@@ -5,14 +5,11 @@ import { connect } from 'react-redux'
 import * as Actions from './../layer/actions'
 import * as Actions2 from './actions'
 
-//const BoxLayer = ({ name, connectDragSource, fit = false, children, column = false }) => {
-
 // connect
 const mapStateToProps = ({layerReducer}) => {
 	return { 
 		dashboard: layerReducer.dashboard,
 		childs: layerReducer.childs,
-		selected2: layerReducer.selected2,
 		direction: layerReducer.direction }
 }
 
@@ -23,14 +20,12 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-
 // Drag Source
 const boxSource = {
 	canDrag(props) {
 		return props.dragType !== undefined
 	},
 	beginDrag(props) {
-		//console.log("props source", props)
 		return { id: props.id, type: props.dragType }
 	}
 }
@@ -47,7 +42,6 @@ const boxTarget = {
 	drop(props, monitor) {
 		if (!monitor.isOver())
 			return;
-		console.log('add to box')
 		props.layer.add(props.id, monitor.getItem())
 	}
 }
@@ -70,7 +64,8 @@ export default class BoxLayer extends Component {
 	}
 
 	handleClick(e) {
-		//this.props.handleClick(this.props.id, 'box')
+		if(this.props.magic)
+			this.props.layer.toggleSelect(this.props.id)
 		e.stopPropagation()
 	}
 
@@ -81,12 +76,13 @@ export default class BoxLayer extends Component {
 		const styles = {}
 		const props = this.props
 
-		if(props.dashboard.selected[0].id === props.id)
-			classList.push('selected')
-
-
-		//console.log((this.props.children === undefined && this.props.magic === true))
-		
+		props.dashboard.selected.forEach(id => {
+			if (id === props.id){
+				classList.push('selected')
+				let index = styleProps.indexOf('backgroundColor')
+				styleProps.splice(index, 1)
+			}
+		})
 
 		if (typeof this.props.className === 'string')
 			classList.push(this.props.className)
@@ -102,13 +98,10 @@ export default class BoxLayer extends Component {
 		if (props.default) {
 			styles.height = '100px'
 			styles.width = '100px'
-			if (!props.selected)
-				styles.backgroundColor = '#252620'
 			styles.margin = '10px'
+			if (styleProps.includes('backgroundColor'))
+				styles.backgroundColor = '#999'
 		}
-
-		if (props.selected)
-			classList.push('selected')
 
 		flexProps.forEach( prop => {
 			if (props.hasOwnProperty(prop))
@@ -120,18 +113,6 @@ export default class BoxLayer extends Component {
 				styles[prop] = props[prop]
 			}
 		})
-/*
-		if (this.props.magic === true){
-			console.log(this.props.elementStyles)
-			props.elementStyles.forEach( prop => {
-				console.log(prop)
-				if (props.hasOwnProperty(prop)){
-					styles[prop] = props[prop]
-				}
-			})
-		}*/
-		
-		//console.log(this.props.children)
 		return this.props.connectDragSource(this.props.connectDropTarget(
 			<div style={ {...styles} }
 				className={[ ...classList ]}

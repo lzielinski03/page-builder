@@ -8,6 +8,7 @@ import Title from './../../components/title'
 import Subtitle from './../../components/subtitle'
 import ToggleButton from './../../components/toggle-button'
 import Label from './../../components/label'
+import InputText from './../../components/input-text'
 
 const LayerProperties = (props) => {
 	return (
@@ -20,6 +21,8 @@ const LayerProperties = (props) => {
 				<Label value="Direction"/>
 				<ToggleButton value={props.direction} values={['row', 'column']} handleClick={props.layer.toggleDirection} />
 				
+				<Title value="Color" color="red" backgroundColor="#373B41" textAlign="center"/>
+				<InputText value={props.color} elementStyles handleInput={props.layer.changeColor}/>
 			</div>}
 		</div>
 	)
