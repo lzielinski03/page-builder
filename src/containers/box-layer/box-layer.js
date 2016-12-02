@@ -26,16 +26,28 @@ const boxSource = {
 		return props.dragType !== undefined
 	},
 	beginDrag(props) {
+		console.log('beginDrag')
+		console.log(props)
 		return { id: props.id, type: props.dragType }
 	}
 }
-
+const boxSource2 = {
+	canDrag(props) {
+		return props.dragType !== undefined
+	},
+	beginDrag(props) {
+		console.log('beginDrag2')
+		console.log(props)
+		return { id: props.id, type: props.dragType }
+	}
+}
+/*
 const collectDrag = (connect, monitor) => {
 	return {
 		connectDragSource: connect.dragSource(),
 		isDragging: monitor.isDragging()
 	}
-}
+}*/
 
 // Drop Target
 const boxTarget = {
@@ -45,17 +57,29 @@ const boxTarget = {
 		props.layer.add(props.id, monitor.getItem())
 	}
 }
-
+/*
 const collectDrop = (connect, monitor) => {
 	return {
 		connectDropTarget: connect.dropTarget(),
 		isOver: monitor.isOver(),
 		canDrop: monitor.canDrop()
 	}
-}
+}*/
+
 @connect(mapStateToProps,mapDispatchToProps)
-@DragSource('BoxLayer', boxSource, collectDrag)
-@DropTarget('BoxLayer', boxTarget, collectDrop)
+@DragSource('BoxLayer', boxSource, (connect, monitor) => ({
+		connectDragSource: connect.dragSource(),
+		isDragging: monitor.isDragging()
+}))
+@DragSource('BoxLayer2', boxSource2, (connect, monitor) => ({
+		connectDragSource2: connect.dragSource(),
+		isDragging2: monitor.isDragging()
+}))
+@DropTarget('BoxLayer', boxTarget, (connect, monitor) => ({
+		connectDropTarget: connect.dropTarget(),
+		isOver: monitor.isOver(),
+		canDrop: monitor.canDrop()
+}))
 export default class BoxLayer extends Component {
 
 	constructor(props) {
@@ -75,6 +99,7 @@ export default class BoxLayer extends Component {
 		let classList = []
 		const styles = {}
 		const props = this.props
+		
 
 		props.dashboard.selected.forEach(id => {
 			if (id === props.id){
@@ -113,13 +138,13 @@ export default class BoxLayer extends Component {
 				styles[prop] = props[prop]
 			}
 		})
-		return this.props.connectDragSource(this.props.connectDropTarget(
+		return props.connectDragSource(props.connectDragSource2(props.connectDropTarget(
 			<div style={ {...styles} }
 				className={[ ...classList ]}
 				//className={ "react-layout-components--box " + [...classList] }
 				onClick={ this.handleClick }>
 				{this.props.children}
 			</div>
-		))
+		)))
 	}
 }
