@@ -13,6 +13,9 @@ import FileDownload from './../containers/download-widget/file-download'
 import Layer from './../containers/layer/layer'
 import LayerProperties from './../containers/layer/layer-properties'
 
+import ResizableBox from './../containers/box/resize-box'
+import DragableBox from './../containers/box/draggable-box'
+import DnDBox from './../containers/box/dnd-box'
 import Box from './../components/box'
 
 const Page = () => {
@@ -31,11 +34,17 @@ const Page = () => {
 						method='POST'
 						/>
 
+					<Box width="50px" height="50px">
+						<Box width="25px" height="25px" backgroundColor="red"/>
+					</Box>
+					<DragableBox width="50px" height="50px" backgroundColor="blue" dragType="BoxLayer"/>
+					<DnDBox width="50px" height="50px" backgroundColor="green" dropType="BoxLayer" dragType="BoxLayer"/>
+					<ResizableBox width="50px" height="50px"><p>qwe</p></ResizableBox>
+
 				</BoxLayer>
 				
 				<BoxLayer column flex="1 1 auto" >
 					<Layer/>
-
 				</BoxLayer>
 
 				<BoxLayer column flex="0 0 20%" backgroundColor="#1D1F21">
