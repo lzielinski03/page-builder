@@ -39,7 +39,7 @@ const Page = () => {
 					</Box>
 					<DragableBox width="50px" height="50px" backgroundColor="blue" dragType="BoxLayer"/>
 					<DnDBox width="50px" height="50px" backgroundColor="green" dropType="BoxLayer" dragType="BoxLayer"/>
-					<ResizableBox width="50px" height="50px"><p>qwe</p></ResizableBox>
+					<ResizableBox width="100" height="100px" margin="10px"><p>qwe</p></ResizableBox>
 
 				</BoxLayer>
 				

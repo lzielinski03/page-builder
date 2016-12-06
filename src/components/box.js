@@ -6,6 +6,8 @@ const box = styled.div`
 	opacity: ${ props => props.opacity };
 	width: ${ props => props.width };
 	height: ${ props => props.height };
+	margin: ${ props => props.margin };
+	position: ${ props => props.position };
 `
 
 box.defaultProps = {
