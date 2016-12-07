@@ -1,6 +1,17 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+const flex = {
+	column: () => css`
+		display: flex;
+		flex-direction: column;
+	`,
+	row: () => css`
+		display: flex;
+		flex-direction: row;
+	`
+}
+
 const box = styled.div`
 	background-color: ${ props => props.selected ? '#252620;' : props.backgroundColor };
 	opacity: ${ props => props.opacity };
@@ -8,6 +19,8 @@ const box = styled.div`
 	height: ${ props => props.height };
 	margin: ${ props => props.margin };
 	position: ${ props => props.position };
+	${ props => props.column ? flex.column() : ''}
+	${ props => props.row ? flex.row() : ''}
 `
 
 box.defaultProps = {
