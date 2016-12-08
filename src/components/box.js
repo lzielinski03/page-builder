@@ -1,7 +1,47 @@
 import React from 'react'
+import styled, { css } from 'styled-components'
 
-//const Box = ({ name, connectDragSource, fit = false, children, column = false }) => {
+const flex = {
+	column: () => css`
+		display: flex;
+		flex-direction: column;
+	`,
+	row: () => css`
+		display: flex;
+		flex-direction: row;
+	`
+}
+
+const box = styled.div`
+	background-color: ${ props => props.selected ? '#252620;' : props.backgroundColor };
+	opacity: ${ props => props.opacity };
+	width: ${ props => props.width };
+	height: ${ props => props.height };
+	margin: ${ props => props.margin };
+	position: ${ props => props.position };
+	${ props => props.column ? flex.column() : ''}
+	${ props => props.row ? flex.row() : ''}
+`
+
+box.defaultProps = {
+	width: '100px',
+	height: '100px',
+	backgroundColor: 'rgb(155, 208, 225)'
+}
+
+export default box
+
+/*
 const Box = (props) => {
+
+	let object = {"backgroundcolor"}
+
+	console.log(props)
+	
+
+	let { elementStyles, classNames } = props
+	console.log(elementStyles, classNames)
+	
 	const flexProps = ['flex', 'flexGrow', 'flexShrink', 'flexBasis']
 	const styleProps = ['backgroundColor', 'color', 'width', 'height']
 	let classList = props.className.split(',')
@@ -41,12 +81,12 @@ const Box = (props) => {
 		e.stopPropagation()
 	}
 	const test = "react-layout-components--box " + classList.join(',')
+	
 	return(
-		<div style={ {...styles} } className={ "react-layout-components--box " + classList.join(' ') } onClick={ handleClick }>
+		<div>
 			{props.children}
 		</div>
 	)
 }
+*/
 
-
-export default Box

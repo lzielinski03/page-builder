@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import	 React, { Component } from 'react'
 import { DragSource, DropTarget } from 'react-dnd'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from './../layer/actions'
 import * as Actions2 from './actions'
 
-// connect
+// connect ??
 const mapStateToProps = ({layerReducer}) => {
 	return { 
 		dashboard: layerReducer.dashboard,
@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-// Drag Source
+// Drag Source => Dragable
 const boxSource = {
 	canDrag(props) {
 		return props.dragType !== undefined
@@ -37,7 +37,7 @@ const collectDrag = (connect, monitor) => {
 	}
 }
 
-// Drop Target
+// Drop Target => Dropeable
 const boxTarget = {
 	drop(props, monitor) {
 		if (!monitor.isOver())
@@ -63,12 +63,14 @@ export default class BoxLayer extends Component {
 		this.handleClick = this.handleClick.bind(this)
 	}
 
+	// BoxLayer
 	handleClick(e) {
 		if(this.props.magic)
 			this.props.layer.toggleSelect(this.props.id)
 		e.stopPropagation()
 	}
 
+	// Box
 	render() {
 		const flexProps = ['flex', 'flexGrow', 'flexShrink', 'flexBasis']
 		const styleProps = ['backgroundColor', 'color', 'width', 'height']

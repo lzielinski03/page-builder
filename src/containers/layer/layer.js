@@ -6,6 +6,7 @@ import * as Actions from './actions'
 import createFragment from 'react-addons-create-fragment'
 
 import BoxLayer from './../box-layer/box-layer'
+import ResizeBox from './../box/resize-box'
 import Title from './../../components/title'
 
 // Connect redux
@@ -41,7 +42,7 @@ const collect = (connect, monitor) => {
 }
 
 const elements = {
-	"BoxLayer": BoxLayer,
+	"BoxLayer": ResizeBox,
 	"Title": Title
 }
 
