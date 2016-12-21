@@ -24,4 +24,4 @@ export default class Layer extends Component {
 			<BoxDroppable {...styles} drop={addElement} elementId={layer.id}/>
 		)
 	}
-}sd
+}
