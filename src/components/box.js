@@ -2,6 +2,9 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 const flex = {
+	display: (value) => css`
+		display: ${value}
+	`,
 	column: () => css`
 		display: flex;
 		flex-direction: column;
@@ -13,20 +16,24 @@ const flex = {
 }
 
 const box = styled.div`
-	background-color: ${ props => props.selected ? '#252620;' : props.backgroundColor };
-	opacity: ${ props => props.opacity };
-	width: ${ props => props.width };
-	height: ${ props => props.height };
-	margin: ${ props => props.margin };
-	position: ${ props => props.position };
-	${ props => props.column ? flex.column() : ''}
-	${ props => props.row ? flex.row() : ''}
+	flex: ${ props => props.flex };
+	${ props => props.display ? flex.display(props.display) : '' };
+	${ props => props.column ? flex.column() : ''};
+	${ props => props.row ? flex.row() : ''};
+	${ props => {
+		let styles = ['background-color', 'opacity', 'width', 'height', 'margin', 'position', 'align-content', 'flex-wrap']
+		let result = {}
+		
+		styles.forEach( style => {
+			if (props.hasOwnProperty(style))
+				result[style] = props[style]
+		})
+		return result;
+	}}
 `
 
 box.defaultProps = {
-	width: '100px',
-	height: '100px',
-	backgroundColor: 'rgb(155, 208, 225)'
+	'background-color': 'rgb(155, 208, 225)'
 }
 
 export default box

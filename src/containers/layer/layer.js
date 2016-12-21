@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { DropTarget } from 'react-dnd'
 import * as Actions from './actions'
+import * as boxActions from './../box/actions'
 import createFragment from 'react-addons-create-fragment'
 
 import BoxLayer from './../box-layer/box-layer'
@@ -20,7 +21,7 @@ const mapStateToProps = ({layerReducer}) => {
 }
 
 const mapDispatchToProps = dispatch => {
-	return { layer: bindActionCreators(Actions, dispatch) }
+	return { layer: bindActionCreators(Actions, dispatch), boxLayer: bindActionCreators(boxActions, dispatch) }
 }
 
 // Drop target
@@ -29,6 +30,10 @@ const boxTarget = {
 		if (!monitor.isOver()) return;
 
 		props.layer.add(props.id, monitor.getItem())
+
+		// testing new funcionalities
+		props.boxLayer.createElement('BoxLayer')
+
 		return monitor.getItem()
 	}
 }

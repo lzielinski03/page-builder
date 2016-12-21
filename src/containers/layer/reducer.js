@@ -3,6 +3,51 @@ import { fromJS } from 'immutable'
 
 let id = 1;
 
+
+// add child (type, parent, props)
+/*
+const normalizerState = {
+	elements: {
+		1: {
+			id: 1,
+			parent: 1,
+			type: 'BoxLayer',
+			props: {
+				children: [2, 3],
+				elementStyles: { key: value }
+			} 
+		},
+		2: {
+			id: 2,
+			parent: 1,
+			type: 'TitleLayer',
+			props: {
+				children: 'Title text',
+				elementStyles: { key: value }
+			}
+		},
+		3: {
+			id: 3,
+			parent: 1,
+			type: 'BoxLayer',
+			props: {
+				children: [4],
+				elementStyles: { key: value }
+			}
+		},
+		4: {
+			id: 4,
+			parent: 3,
+			type: 'TitleLayer',
+			props: {
+				children: [],
+				elementStyles: { key: value }
+			}
+		},
+	},
+	// layer: 0 default
+}
+*/
 const initialState = {
 	id: 0,
 	props: {

@@ -51,7 +51,7 @@ export default class FileDownload extends Component {
 	componentDidUpdate() {
 		let { didInvalidate, isFetching, blobUrl, download } = this.props
 
-		// if download success call function
+		// if download success prompt download dialog
 		if (!didInvalidate && !isFetching && blobUrl != null){
 			let tempLink = document.createElement('a')
 			tempLink.setAttribute('href', blobUrl)
@@ -72,8 +72,3 @@ export default class FileDownload extends Component {
 		)
 	}
 }
-
-
-
-//export default connect(mapStateToProps, mapDispatchToProps)(FileDownload)
-

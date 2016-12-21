@@ -42,7 +42,7 @@ const boxTarget = {
 	drop(props, monitor) {
 		if (!monitor.isOver())
 			return;
-		props.layer.add(props.id, monitor.getItem())
+		//props.layer.add(props.id, monitor.getItem())
 	}
 }
 

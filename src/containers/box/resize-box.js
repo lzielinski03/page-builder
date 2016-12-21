@@ -41,7 +41,7 @@ export default class ResizableBox extends Component {
 				//ref={(rightBar) => {this.rightBar = findDOMNode(rightBar)}}
 				>
 				
-				<div style={{'height':'100%', width:'10px', 'background-color':'white', 'position': 'absolute', right: '-5px'}} 
+				<div style={{'height':'100%', width:'10px', 'backgroundColor':'white', 'position': 'absolute', right: '-5px'}} 
 					onMouseDown={this.handleRight}></div>
 				
 				{this.props.children}

@@ -10,9 +10,11 @@ import Title from './../components/title'
 import Subtitle from './../components/subtitle'
 import Button from './../components/button'
 import FileDownload from './../containers/download-widget/file-download'
-import Layer from './../containers/layer/layer'
+//import Layer from './../containers/layer/layer'
+import Layer from './../components/layer/layer'
 import LayerProperties from './../containers/layer/layer-properties'
 
+import BoxResize from './../containers/box/box-resize'
 import ResizableDnDBox from './../containers/box/resize-dnd-box'
 import ResizableBox from './../containers/box/resize-box'
 import DragableBox from './../containers/box/draggable-box'
@@ -48,12 +50,16 @@ const Page = () => {
 
 						<ResizableDnDBox/>
 
+						<BoxResize backgroundColor="purple">
+							<p>jorge</p>
+						</BoxResize>
+
 					</Box>
 				</BoxLayer>
 				
-				<BoxLayer column flex="1 1 auto" >
+				<Box column flex="1 1 auto" >
 					<Layer/>
-				</BoxLayer>
+				</Box>
 
 				<BoxLayer column flex="0 0 20%" backgroundColor="#1D1F21">
 					<LayerProperties />
