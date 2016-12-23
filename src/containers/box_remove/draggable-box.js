@@ -1,7 +1,7 @@
 import	 React, { Component } from 'react'
 import { findDOMNode } from 'react-dom';
 import { DragSource } from 'react-dnd'
-import Box from './../../components/box'
+import Box from './../../components/box/box'
 
 const boxSource = {
 	canDrag(props) {
@@ -18,7 +18,7 @@ const boxSource = {
 		isDragging: monitor.isDragging()
 	}
 })
-export default class DragableBox extends Component {
+class DragableBox extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -34,3 +34,9 @@ export default class DragableBox extends Component {
 		)
 	}
 }
+
+DragableBox.propTypes = {
+	
+};
+
+export default DragableBox

@@ -6,7 +6,7 @@ import * as Actions from './actions'
 import * as boxActions from './../box/actions'
 import createFragment from 'react-addons-create-fragment'
 
-import BoxLayer from './../box-layer/box-layer'
+//import BoxLayer from './../box-layer/box-layer'
 import ResizeBox from './../box/resize-box'
 import Title from './../../components/title'
 
@@ -61,7 +61,7 @@ export default class Layer extends Component {
 	}
 
 	handleClick(e) {
-		console.log('handleClick')
+//		console.log('handleClick')
 		this.props.layer.toggleSelect(this.props.id)
 		e.stopPropagation()
 	}

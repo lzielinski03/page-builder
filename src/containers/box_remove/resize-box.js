@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
-import Box from './../../components/box'
+import Box from './../../components/box/box'
 
 export default class ResizableBox extends Component {
 	constructor(props) {

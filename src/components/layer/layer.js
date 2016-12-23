@@ -3,11 +3,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as layerActions from './../../redux/modules/layer';
 
-import BoxDroppable from './box-droppable'
+import LayerBox from './layer-box'
+import Box from './../box/box'
+import BoxDroppable from './../box/droppable-box'
 
 @connect(
 	state => ({
-		layer: state.layer.entities.element[0]
+		elements: state.layer.entities.element
 	}),
 	dispatch => bindActionCreators(layerActions, dispatch)
 )
@@ -17,11 +19,16 @@ export default class Layer extends Component {
 	}
 
 	render() {
-		console.log(this.props)
-		let {addElement, layer} = this.props
+		let {add, elements} = this.props
+		let layer = elements[0]
+
+
+		console.log(layer)
 		let {styles} = layer.props;
 		return (
-			<BoxDroppable {...styles} drop={addElement} elementId={layer.id}/>
+			<BoxDroppable {...styles} drop={add} elementId={layer.id}>
+				<LayerBox/>
+			</BoxDroppable>
 		)
 	}
 }

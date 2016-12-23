@@ -42,7 +42,7 @@ export default class FileDownload extends Component {
 	};
 
 	download() {
-		console.log(this.props)
+//		console.log(this.props)
 		let { url, dataTree, method, download } = this.props
 
 		download.file( url, dataTree, method )

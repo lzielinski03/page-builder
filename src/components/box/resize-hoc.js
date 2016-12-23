@@ -18,7 +18,7 @@ export default function Resizable(WrappedComponent) {
 
 		onBorderClick(event) {
 			// dispatch action initialPoint {pointerY, pointerX}
-			console.log('onBorderClick')
+			//console.log('onBorderClick')
 			
 
 			function n() {
@@ -77,7 +77,7 @@ export default function Resizable(WrappedComponent) {
 		}
 
 		resize(event) {
-			console.log('resize')
+			//console.log('resize')
 			// dispatch action resize, {direction, pointer}
 			/* 
 			let diference = e.clientX - this.state.startY
@@ -89,7 +89,7 @@ export default function Resizable(WrappedComponent) {
 		}
 
 		finishResize(event) {
-			console.log('finishResize')
+			//console.log('finishResize')
 			//this.setState({ startY: null })
 			// dispatch action finishResize {pointer null}
 			document.removeEventListener('mouseup', this.finishResize, true)

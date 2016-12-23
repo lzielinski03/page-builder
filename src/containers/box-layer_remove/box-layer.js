@@ -2,9 +2,9 @@ import	 React, { Component } from 'react'
 import { DragSource, DropTarget } from 'react-dnd'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as Actions from './../layer/actions'
+import * as Actions from './../layer_remove/actions'
 import * as Actions2 from './actions'
-
+/*
 // connect ??
 const mapStateToProps = ({layerReducer}) => {
 	return { 
@@ -53,9 +53,10 @@ const collectDrop = (connect, monitor) => {
 		canDrop: monitor.canDrop()
 	}
 }
+
 @connect(mapStateToProps,mapDispatchToProps)
 @DragSource('BoxLayer', boxSource, collectDrag)
-@DropTarget('BoxLayer', boxTarget, collectDrop)
+@DropTarget('BoxLayer', boxTarget, collectDrop)*/
 export default class BoxLayer extends Component {
 
 	constructor(props) {
@@ -77,7 +78,7 @@ export default class BoxLayer extends Component {
 		let classList = []
 		const styles = {}
 		const props = this.props
-
+/*
 		props.dashboard.selected.forEach(id => {
 			if (id === props.id){
 				classList.push('selected')
@@ -85,7 +86,7 @@ export default class BoxLayer extends Component {
 				styleProps.splice(index, 1)
 			}
 		})
-
+*/
 		if (typeof this.props.className === 'string')
 			classList.push(this.props.className)
 
@@ -115,7 +116,7 @@ export default class BoxLayer extends Component {
 				styles[prop] = props[prop]
 			}
 		})
-		return this.props.connectDragSource(this.props.connectDropTarget(
+		return ((
 			<div style={ {...styles} }
 				className={[ ...classList ]}
 				//className={ "react-layout-components--box " + [...classList] }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Subtitle = (props) => {
-	const styleProps = ['backgroundColor', 'color', 'textAlign']
+	const styleProps = ['backgroundColor', 'color', 'textAlign', 'margin', 'marginTop']
 	const styles = {}
 
 	styleProps.forEach( prop => {

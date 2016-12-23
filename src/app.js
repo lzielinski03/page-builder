@@ -2,7 +2,7 @@
 import './assets/style.css'
 import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import reducer from './reducers'
+import reducer from './redux/modules/reducer'
 import thunk from 'redux-thunk'
 
 import React from 'react'

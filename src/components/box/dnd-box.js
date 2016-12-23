@@ -1,11 +1,12 @@
 import	 React, { Component } from 'react'
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd'
-import Box from './../../components/box'
+import Box from './../../components/box/box'
 
 const boxSource = {
 	canDrag(props) {
-		return props.dragType !== undefined
+		// blocked element can't be dragged
+		return true
 	},
 	beginDrag(props) {
 		return { id: props.id, type: props.dragType }
@@ -13,20 +14,26 @@ const boxSource = {
 }
 const boxTarget = {
 	drop(props, monitor) {
-		if (!monitor.isOver())
-			return;
-		console.log('droped in dnd-box')
-		//props.layer.add(props.id, monitor.getItem())
+		if (!monitor.isOver()) return;
+		let item = monitor.getItem()
+
+		if ( item.id === undefined && props.drop !== undefined)
+			props.drop(item.type, props.elementId)
+		
+		if ( item.id !== undefined && props.move !== undefined)
+			props.move(item, props.elementId)
+
+		return item
 	}
 }
 
-@DragSource('BoxLayer', boxSource, (connect, monitor) => {
+@DragSource('Box', boxSource, (connect, monitor) => {
 	return {
 		connectDragSource: connect.dragSource(),
 		isDragging: monitor.isDragging()
 	}
 })
-@DropTarget('BoxLayer', boxTarget, (connect, monitor) => {
+@DropTarget('Box', boxTarget, (connect, monitor) => {
 	return {
 		connectDropTarget: connect.dropTarget(),
 		isOver: monitor.isOver(),
@@ -34,15 +41,19 @@ const boxTarget = {
 	}
 })
 
-// Drag and Drop Box
-export default class DnDBox extends Component {
+class DnDBox extends Component {
 	constructor(props) {
 		super(props);
 	}
 
+	static propTypes = {
+		elementId: React.PropTypes.number.isRequired,
+		drop : React.PropTypes.func.isRequired,
+		move: React.PropTypes.func
+	}
+
 	render() {
 		let {connectDragSource, connectDropTarget} = this.props
-		// remove drag and drop sources from porps and sprad to childs
 		let props = Object.assign({}, this.props, {connectDragSource: undefined, connectDropTarget: undefined})
 
 		return (
@@ -57,3 +68,5 @@ export default class DnDBox extends Component {
 		)
 	}
 }
+
+export default DnDBox
