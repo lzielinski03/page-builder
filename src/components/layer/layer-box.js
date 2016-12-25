@@ -11,7 +11,7 @@ import LayerBoxHoc from './layer-box-hoc'
 	}),
 	dispatch => bindActionCreators(layerActions, dispatch)
 )
-@LayerBoxHoc()
+@LayerBoxHoc
 class LayerBox extends Component {
 	constructor(props) {
 		super(props)

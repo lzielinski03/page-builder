@@ -7,27 +7,30 @@ import LayerBox from './layer-box'
 import Box from './../box/box'
 import BoxDroppable from './../box/droppable-box'
 
+import LayerBoxHoc from './layer-box-hoc'
+
 @connect(
 	state => ({
 		elements: state.layer.entities.element
 	}),
 	dispatch => bindActionCreators(layerActions, dispatch)
 )
+@LayerBoxHoc
 export default class Layer extends Component {
 	constructor(props) {
 		super(props);
 	}
 
 	render() {
-		let {add, elements} = this.props
-		let layer = elements[0]
+		let {add, elements, element} = this.props
 
-
-		console.log(layer)
-		let {styles} = layer.props;
+		console.log('Layer props', this.props)
 		return (
-			<BoxDroppable {...styles} drop={add} elementId={layer.id}>
-				<LayerBox/>
+			<BoxDroppable
+				{...elements[0].props.styles}
+				drop={add}
+				elementId={elements[0].id}>
+				{ this.props.children }
 			</BoxDroppable>
 		)
 	}

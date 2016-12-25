@@ -80,7 +80,7 @@ const Page = () => {
 				</Box>
 				
 				<Box direction="column" flex="1 1 auto" >
-					<Layer/>
+					<Layer elementId="0"/>
 				</Box>
 
 				<Box direction="column" flex="0 0 20%" background-color="#1D1F21">

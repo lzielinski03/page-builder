@@ -25,6 +25,10 @@ class DragableBox extends Component {
 		super(props);
 	}
 
+	static propTypes = {
+		type: React.PropTypes.string.isRequired
+	}
+
 	render() {
 		let {connectDragSource} = this.props
 		let props = Object.assign({}, this.props, {connectDragSource: undefined})

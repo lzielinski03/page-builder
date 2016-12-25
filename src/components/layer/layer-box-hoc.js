@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import createFragment from 'react-addons-create-fragment'
 import Box from './../box/box'
+import LayerDraggableBox from './layer-draggable-box'
 
-const element = {
+const elementTypes = {
 	"Box": Box,
+	"DraggableBox": LayerDraggableBox
 }
 
 export default function LayerBoxHoc(WrappedComponent) {
@@ -11,26 +13,33 @@ export default function LayerBoxHoc(WrappedComponent) {
 
 		constructor(props) {
 			super(props)
-			console.log('super')
 		}
 
 		render(){
-			console.log('super')
 
-			//let { children } = this.props
+			let { elements, elementId } = this.props
+			let element = elements[elementId]
 
 			let children = {}
-			let props = Object.assign({}, this.props, { children: undefined })
+			let props = Object.assign({}, this.props)
 
-			this.props.children.map( child => {
-				children[child.id] = React.createElement(element[child.type], props)
-			})
-
+			if (element.props.children !== undefined)
+				element.props.children.map( child => {
+					let childElem = elements[child]
+					console.log(childElem.type)
+					let childProps = Object.assign({}, childElem.props, { elementId: childElem.id, type: childElem.type })
+					console.log(childProps)
+					children[element.id + '-' + child] = React.createElement(
+						elementTypes[childElem.type],
+						childProps
+					)
+					return children
+				})
 
 			let fragmentedChildren = createFragment(children)
-
+			
 			return (
-				<WrappedComponent>
+				<WrappedComponent { ...props }>
 					{ fragmentedChildren }
 				</WrappedComponent>
 			)

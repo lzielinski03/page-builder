@@ -59,7 +59,6 @@ export default function reducer (state = initialState, action) {
 				
 			}
 		default:
-			console.log('enter enyway')
 			return state;
 	}
 }
@@ -70,7 +69,10 @@ function newElement(id, type, parent) {
 		type: type,
 		parent: parent,
 		props: {
-			styles: {},
+			styles: {
+				width: '100px',
+				height: '100px'
+			},
 			children: []
 		}
 	}

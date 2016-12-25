@@ -7,6 +7,7 @@ const boxTarget = {
 	drop(props, monitor) {
 		if (!monitor.isOver()) return;
 		let item = monitor.getItem()
+		console.log(item)
 
 		if ( item.id === undefined && props.drop !== undefined)
 			props.drop(item.type, props.elementId)
@@ -29,6 +30,8 @@ class BoxDroppable extends Component {
 
 	constructor(props) {
 		super(props)
+		if(props.magic !== undefined)
+			console.log('BoxDroppable', props)
 	}
 
 	static propTypes = {
@@ -39,7 +42,10 @@ class BoxDroppable extends Component {
 
 	render() {
 		let { connectDropTarget } = this.props
-		let props = Object.assign({}, this.props, {connectDropTarget: undefined})
+		let props = Object.assign({}, this.props, {
+			connectDropTarget: undefined,
+			canDrop: undefined,
+		})
 		return (
 			<Box 
 			{...props}
