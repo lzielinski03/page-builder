@@ -2,26 +2,29 @@ import React, { Component } from 'react'
 import ResizeBorder from './../../components/resize-border'
 
 //Props Proxy
-
-
 export default function Resizable(WrappedComponent) {
 	return class ResizableHOC extends Component {
 
 		constructor(props) {
 			super(props)
-			this.state = { isResizing: false };
+			//this.state = { isResizing: false };
 			
 			this.onBorderClick = this.onBorderClick.bind(this)
 			this.resize = this.resize.bind(this)
 			this.finishResize = this.finishResize.bind(this)
 		}
 
-		onBorderClick(event) {
+		onBorderClick(direction, e) {
 			// dispatch action initialPoint {pointerY, pointerX}
-			//console.log('onBorderClick')
-			
+			console.log('resize hoc onBorderClick', this.props)
+			this.props.initResize(this.props.elementId, e.clientX, e.clientY);
+			console.log('onBorderClick', direction)
 
-			function n() {
+
+			document.addEventListener('mouseup', this.finishResize, true)
+			document.addEventListener('mousemove', this.resize, true)
+
+			function init() {
 				console.log('x axis')
 				document.addEventListener('mouseup', this.finishResize, true)
 				document.addEventListener('mousemove', this.resize, true)
@@ -33,7 +36,7 @@ export default function Resizable(WrappedComponent) {
 				// dispaych action to set the state with cardinal
 			}
 			function sur() {
-				console.log('sur')
+				console.log('surts')
 				// dispaych action to set the state with cardinal
 			}
 			function este() {
@@ -76,7 +79,9 @@ export default function Resizable(WrappedComponent) {
 			}
 		}
 
-		resize(event) {
+		resize(e) {
+			console.log('resize', this.props)
+			this.props.resize(this.props.elementId, e.clientX, e.clientY)
 			//console.log('resize')
 			// dispatch action resize, {direction, pointer}
 			/* 
@@ -89,7 +94,7 @@ export default function Resizable(WrappedComponent) {
 		}
 
 		finishResize(event) {
-			//console.log('finishResize')
+			console.log('finishResize')
 			//this.setState({ startY: null })
 			// dispatch action finishResize {pointer null}
 			document.removeEventListener('mouseup', this.finishResize, true)
@@ -102,15 +107,16 @@ export default function Resizable(WrappedComponent) {
 				let props = {
 					position: direction,
 					key: index,
-					onMouseDown: this.onBorderClick()[direction].bind(this)
+					onMouseDown: this.onBorderClick.bind(this, direction)
+					//onMouseDown: this.onBorderClick()[direction].bind(this)
 				};
 				return React.createElement(ResizeBorder, props)
 			})
-			
+			//console.log(this.props)
 			return (
 				<WrappedComponent {...this.props} position="relative">
-					<div style={{'height':'100%', width:'10px', 'backgroundColor':'white', 'position': 'absolute', right: '-5px'}} 
-					onMouseDown={this.onBorderClick}></div>
+					{/*<div style={{'height':'100%', width:'10px', 'backgroundColor':'white', 'position': 'absolute', right: '-5px'}} 
+					onMouseDown={this.onBorderClick}></div>*/}
 
 					{dragBorder}
 

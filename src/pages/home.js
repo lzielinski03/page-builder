@@ -16,6 +16,7 @@ import DragableBox from './../components/box/draggable-box'
 import DroppableBox from './../components/box/droppable-box'
 import DnDBox from './../components/box/dnd-box'
 import ResizableBox from './../components/box/resize-box'
+import ResizableDragableBox from './../components/box/resize-draggable-box'
 
 //import BoxLayer from './../containers/box-layer/box-layer'
 //import LayerProperties from './../containers/layer/layer-properties'
@@ -48,7 +49,7 @@ const Page = () => {
 					<ResizableBox width="50px" height="50px" background-color="orange"/>
 
 					<Subtitle value="Resizable & Dragable & Droppable Box" color="white"/>
-
+					<ResizableDragableBox width="50px" height="50px" background-color="purple" type="ResizableDraggableBox"/>
 					
 {/*
 					<FileDownload

@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
-import Box from './../../components/box/box'
+import Resizable from './resize-hoc'
+import DnDBox from './dnd-box'
 
+@Resizable
 export default class ResizeDnDBox extends Component {
 	render() {
-		return (<Box/>)
+		return (
+			<DnDBox {...this.props}>
+				{this.props.children}
+			</DnDBox>
+		)
 	}
 }

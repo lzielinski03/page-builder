@@ -1,4 +1,6 @@
 const ADD_ELEMENT = 'layer-box/ADD_ELEMENT'
+const INIT_RESIZE = 'layer-box/INIT_RESIZE'
+const RESIZE = 'layer-box/RESIZE'
 
 const initialState = {
 	entities: {
@@ -14,7 +16,7 @@ const initialState = {
 						'flex-wrap': 'wrap',
 						'align-content': 'flex-start'
 					},
-					children: []
+					children: [],
 				}
 			}
 		}
@@ -27,8 +29,15 @@ const getId = () => id++;
 
 export const add = (type, parent) => {
 	let id = getId();
-
 	return { type: ADD_ELEMENT, parent, element: newElement(id, type, parent) }
+}
+
+export const initResize = (id, x, y) => {
+	return { type: INIT_RESIZE, payload: { id, cors: {x, y }}}
+}
+
+export const resize = (id, x, y) => {
+	return { type: RESIZE, payload: { id, cors: {x, y }}}
 }
 
 export default function reducer (state = initialState, action) {
@@ -58,6 +67,19 @@ export default function reducer (state = initialState, action) {
 				}
 				
 			}
+		case INIT_RESIZE:
+			console.log('action', action)
+			let element = Object.assign({}, state.entities.element);
+			element[action.payload.id].props.isResizing = true
+			element[action.payload.id].props.initX = action.payload.cors.x;
+			element[action.payload.id].props.initY = action.payload.cors.y;
+			return {
+				...state,
+				entities: {element}
+			}
+		case RESIZE:
+			console.log(action)
+			
 		default:
 			return state;
 	}
@@ -73,7 +95,8 @@ function newElement(id, type, parent) {
 				width: '100px',
 				height: '100px'
 			},
-			children: []
+			children: [],
+			isResizing: false
 		}
 	}
 }

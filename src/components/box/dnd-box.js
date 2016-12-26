@@ -6,10 +6,13 @@ import Box from './../../components/box/box'
 const boxSource = {
 	canDrag(props) {
 		// blocked element can't be dragged
-		return true
+		let drag = true
+		if (props.isResizing)
+			drag = false
+		return drag
 	},
 	beginDrag(props) {
-		return { id: props.id, type: props.dragType }
+		return { id: props.id, type: props.type }
 	}
 }
 const boxTarget = {
@@ -49,7 +52,8 @@ class DnDBox extends Component {
 	static propTypes = {
 		elementId: React.PropTypes.number.isRequired,
 		drop : React.PropTypes.func.isRequired,
-		move: React.PropTypes.func
+		move: React.PropTypes.func,
+		isResizing: React.PropTypes.bool.isRequired
 	}
 
 	render() {

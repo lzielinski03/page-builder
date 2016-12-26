@@ -20,7 +20,6 @@ export default class LayerDraggableBox extends Component {
 	render() {
 		let {add, elements, element, elementId} = this.props
 
-		console.log('Layer draggable box props', this.props)
 		return (
 			<BoxDraggable
 				{...elements[elementId].props.styles}

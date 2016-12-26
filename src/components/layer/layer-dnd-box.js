@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as layerActions from './../../redux/modules/layer';
 
-import Box from './../box/box'
-import BoxDroppable from './../box/droppable-box'
-
+import DnDBox from './../box/dnd-box'
 import LayerBoxHoc from './layer-box-hoc'
 
 @connect(
@@ -15,21 +13,23 @@ import LayerBoxHoc from './layer-box-hoc'
 	dispatch => bindActionCreators(layerActions, dispatch)
 )
 @LayerBoxHoc
-export default class Layer extends Component {
+export default class LayerDnDBox extends Component {
 	constructor(props) {
 		super(props);
 	}
 
 	render() {
-		let {add, elements, element} = this.props
+		let {add, elements, element, elementId} = this.props
 
 		return (
-			<BoxDroppable
-				{...elements[0].props.styles}
+			<DnDBox
+				{...this.props.styles}
+				{...elements[elementId].props.styles}
+				type={this.props.type}
 				drop={add}
-				elementId={elements[0].id}>
+				elementId={elementId}>
 				{ this.props.children }
-			</BoxDroppable>
+			</DnDBox>
 		)
 	}
 }

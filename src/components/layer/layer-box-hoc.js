@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import createFragment from 'react-addons-create-fragment'
 import Box from './../box/box'
-import LayerDraggableBox from './layer-draggable-box'
+import LayerDnDBox from './layer-dnd-box'
+import LayerResizeDnDBox from './layer-resize-dnd-box'
 
 const elementTypes = {
 	"Box": Box,
-	"DraggableBox": LayerDraggableBox
+	"DraggableBox": LayerDnDBox,
+	"ResizableDraggableBox": LayerResizeDnDBox,
 }
 
 export default function LayerBoxHoc(WrappedComponent) {
@@ -26,9 +28,16 @@ export default function LayerBoxHoc(WrappedComponent) {
 			if (element.props.children !== undefined)
 				element.props.children.map( child => {
 					let childElem = elements[child]
-					console.log(childElem.type)
-					let childProps = Object.assign({}, childElem.props, { elementId: childElem.id, type: childElem.type })
-					console.log(childProps)
+					let childProps = Object.assign({}, childElem.props,
+						{ 
+							elementId: childElem.id,
+							type: childElem.type,
+							styles: {
+								...childElem.props.styles,
+								'background-color': randomRGB()
+							}
+						})
+				
 					children[element.id + '-' + child] = React.createElement(
 						elementTypes[childElem.type],
 						childProps
@@ -45,4 +54,11 @@ export default function LayerBoxHoc(WrappedComponent) {
 			)
 		}
 	}
+}
+
+function randomRGB(){
+	let random = () => {
+		return Math.floor(Math.random() * 255) + 1  
+	}
+	return 'rgb(' + random() + ', ' + random() + ', ' + random() + ')';
 }
