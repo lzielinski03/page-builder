@@ -6,6 +6,8 @@ import Box from './../../components/box/box'
 const boxSource = {
 	canDrag(props) {
 		// blocked element can't be dragged
+		console.log('Resizable DnDBox canDrag', props)
+		
 		let drag = true
 		if (props.isResizing)
 			drag = false

@@ -28,7 +28,6 @@ export default class LayerResizeDnDBox extends Component {
 				drop={add}
 				initResize={initResize}
 				resize={resize}
-				isResizing={isResizing}
 				elementId={elementId}>
 				{ this.props.children }
 			</ResizeDnDBox>

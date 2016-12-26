@@ -36,8 +36,8 @@ export const initResize = (id, x, y) => {
 	return { type: INIT_RESIZE, payload: { id, cors: {x, y }}}
 }
 
-export const resize = (id, x, y) => {
-	return { type: RESIZE, payload: { id, cors: {x, y }}}
+export const resize = (id, direction, width, height) => {
+	return { type: RESIZE, payload: { id, direction, dimension: { width, height }}}
 }
 
 export default function reducer (state = initialState, action) {
@@ -78,8 +78,13 @@ export default function reducer (state = initialState, action) {
 				entities: {element}
 			}
 		case RESIZE:
-			console.log(action)
-			
+			let elem = Object.assign({}, state.entities.element);
+			console.log('new height: ', action.payload.dimension.height)
+			if (action.payload.direction === 's')
+				elem[action.payload.id].props.styles.height = action.payload.dimension.height + 'px'
+			if (action.payload.direction === 'o')
+				elem[action.payload.id].props.styles.width = action.payload.dimension.width + 'px'
+			return { ...state, entities: { element: elem }};
 		default:
 			return state;
 	}
